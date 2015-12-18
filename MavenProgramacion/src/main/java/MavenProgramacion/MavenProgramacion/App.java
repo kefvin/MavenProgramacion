@@ -17,11 +17,10 @@ public class App{
 	public static int Ncasa = 0;
 	public static String casa;
 	public static final String papa = "*<]:-DOo";
-	public static int Cpapa;
 	public static final String reno = ">:o)";
-	public static int Creno;
 	public static final String elfo = "<]:-D";
-	public static int Celfo;
+	public static int Cuenta;
+	
 	
     public static void main( String[] args ) throws IOException
     {
@@ -31,9 +30,13 @@ public class App{
     	BufferedReader br = new BufferedReader(new InputStreamReader(
     			App.class.getResource("/MonAscii.txt").openStream()));
     	
+    	String papa = "*<]:-DOo";
+    	String reno = ">:o)";
+    	String elfo = "<]:-D";
+    	
+    	
     	try{
     		while((casa = br.readLine()) != null) { 
-    			System.out.println("0");
     			Ncasa++;
     			/* Llamar funciones como comprovarPapa 
     			 * y apartir del primer caràcter de los personajes
@@ -41,12 +44,11 @@ public class App{
     			
     			System.out.println("Casa "+Ncasa);
     			
-    			app.comprovarPapa();
-    			System.out.println("1");
-    			app.comprovarReno();
-    			System.out.println("2");
-    			app.comprovarElfo();
-    			System.out.println("3");
+    			app.buscarAscii(papa,"Papa Noel");
+    			app.buscarAscii(reno, "Reno");
+    			app.buscarAscii(elfo, "Elfo");
+    			
+    			System.out.println();
     		}
     	}catch(Exception e){
     		System.out.println(e);
@@ -56,57 +58,23 @@ public class App{
     	
     }
     
-	public void comprovarPapa(){
+	public void buscarAscii(String buscar, String quien){
 		
-		Cpapa=0;
-		String comprovaPapa;
-		char primerPapa = papa.charAt(0);
+		Cuenta=0;
+		int comprova=0;
 		
-		for(int i=0; i<casa.length(); i++){
-			
-			if(casa.charAt(i) == primerPapa){
+			while(comprova!=-1){
+				comprova = casa.indexOf(buscar, comprova);
 				
-				comprovaPapa = casa.substring(casa.charAt(i), (casa.charAt(i)+papa.length()-1));
-				if(comprovaPapa.equals(papa)){
 					
-					Cpapa++;
-					
-				}
+					if(comprova!=-1){
+						Cuenta++;
+						comprova+=1;
+					}
 			}
-		}
-		System.out.print("Papa Noel "+Cpapa);
-	}
-	
-	public void comprovarReno(){
-		Creno=0;
-		String comprovaReno;
-		char primerReno = reno.charAt(0);
-		
-		for(int i=0; i<casa.length(); i++){
-			if(casa.charAt(i) == primerReno){
-				comprovaReno = casa.substring(casa.charAt(i), (casa.charAt(i)+reno.length()-1));
-				if(comprovaReno.equals(reno)){
-					Creno++;
-				}
-			}
-		}
-		System.out.print("Reno "+Creno);
-	}
-	
-	public void comprovarElfo(){
-		Celfo=0;
-		String comprovaElfo;
-		char primerElfo = elfo.charAt(0);
-		
-		for(int i=0; i<casa.length(); i++){
-			if(casa.charAt(i) == primerElfo){
-				comprovaElfo = casa.substring(casa.charAt(i), (casa.charAt(i)+elfo.length()-1));
-				if(comprovaElfo.equals(elfo)){
-					Celfo++;
-				}
-			}
-		}
-		System.out.print("Elfo "+Celfo);
+			
+		System.out.print(quien+" "+Cuenta+" .");
+			
 	}
 	
 }
