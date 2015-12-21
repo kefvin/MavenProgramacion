@@ -13,8 +13,8 @@ import java.io.Reader;
  *
  */
 public class App{
-	
-	public static int Ncasa = 0;
+
+	public static boolean gion = true;
 	public static String casa;
 	public static final String papa = "*<]:-DOo";
 	public static final String reno = ">:o)";
@@ -37,12 +37,11 @@ public class App{
     	
     	try{
     		while((casa = br.readLine()) != null) { 
-    			Ncasa++;
+    			
     			/* Llamar funciones como comprovarPapa 
     			 * y apartir del primer caràcter de los personajes
     			 * crear substring de la misma longitud y comparar*/
     			
-    			System.out.println("Casa "+Ncasa);
     			
     			app.buscarAscii(papa,"Papa Noel");
     			app.buscarAscii(reno, "Reno");
@@ -70,11 +69,16 @@ public class App{
 					if(comprova!=-1){
 						Cuenta++;
 						comprova+=1;
+						gion = false;
 					}
 			}
-			
-		System.out.print(quien+" "+Cuenta+" .");
-			
+		
+		if(gion==false){
+			System.out.print(quien+" ("+Cuenta+") ");
+			gion = true;
+		}else if(quien.equals("Elfo")){
+			System.out.print("-");
+		}
 	}
 	
 }
