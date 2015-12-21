@@ -16,6 +16,7 @@ public class App{
 
 	public static boolean gion = true;
 	public static String casa;
+	public static int CPapa = 0;
 	public static final String papa = "*<]:-DOo";
 	public static final String reno = ">:o)";
 	public static final String elfo = "<]:-D";
@@ -37,7 +38,7 @@ public class App{
     	
     	try{
     		while((casa = br.readLine()) != null) { 
-    			
+    			CPapa = 0;
     			/* Llamar funciones como comprovarPapa 
     			 * y apartir del primer caràcter de los personajes
     			 * crear substring de la misma longitud y comparar*/
@@ -65,13 +66,20 @@ public class App{
 			while(comprova!=-1){
 				comprova = casa.indexOf(buscar, comprova);
 				
-					
+				
 					if(comprova!=-1){
 						Cuenta++;
 						comprova+=1;
 						gion = false;
+						if(buscar.equals(papa)){
+							CPapa++;
+						}
 					}
+				
 			}
+		if(buscar.equals(elfo)){
+			Cuenta = Cuenta -CPapa;
+		}
 		
 		if(gion==false){
 			System.out.print(quien+" ("+Cuenta+") ");
@@ -79,6 +87,15 @@ public class App{
 		}else if(quien.equals("Elfo")){
 			System.out.print("-");
 		}
+	}
+
+	private int comprovarEncontrados(int comprova) {
+		if(comprova!=-1){
+			Cuenta++;
+			comprova+=1;
+			gion = false;
+		}
+		return comprova+1;
 	}
 	
 }
