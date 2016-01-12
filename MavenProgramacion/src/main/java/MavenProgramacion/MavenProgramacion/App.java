@@ -82,8 +82,10 @@ public class App{
 		}
 		
 		if(gion==false){
+			if(Cuenta!=0){
 			System.out.print(quien+" ("+Cuenta+") ");
 			gion = true;
+			}
 		}else if(quien.equals("Elfo")){
 			System.out.print("-");
 		}
