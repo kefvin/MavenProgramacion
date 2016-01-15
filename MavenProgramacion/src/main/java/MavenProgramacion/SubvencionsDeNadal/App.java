@@ -10,12 +10,16 @@ import java.util.regex.Pattern;
 
 public class App {
 	
-	public static void main( String[] args ) throws IOException
-    {
+	public int Pare = 0;
+	public int Reis = 0;
+	public int Tio = 0;
+	public int Christkind = 0;
+	
+	
+	
+	public static void main( String[] args ) throws IOException    {
 		String linia;
-		String nenMolestes = "^\\w+:";
-		String personatje = "(.*):";
-		String seguent = "-";
+		
 		
 	
 		BufferedReader br = new BufferedReader( new InputStreamReader(
@@ -23,10 +27,26 @@ public class App {
 	
 		while((linia = br.readLine()) != null){
 		
-			buscar()
-	}
-	
-	
+			buscar(linia);
+		}
 	
     }
+
+	// Busca usando la linea dada por el while
+	public static void buscar(String linia) {
+		//[^:]+: (.*?)- (.*)
+		String personaInici = "[^:]+: ";
+		String resta = "(.*)";
+		String regals = "(.*?)-";
+		
+		//Matcher es donde buscar y pattern es la expresión regular que busco
+		Pattern p = Pattern.compile(personaInici+resta);
+		Matcher m = p.matcher(linia);
+		
+		//Necesito conseguir los nombres y quedarme con el resto
+		while(m.find()){
+			System.out.print(m.group(1));
+		}
+		
+	}
 }
