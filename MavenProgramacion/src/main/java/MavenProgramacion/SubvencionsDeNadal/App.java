@@ -35,17 +35,31 @@ public class App {
 	// Busca usando la linea dada por el while
 	public static void buscar(String linia) {
 		//[^:]+: (.*?)- (.*)
-		String personaInici = "[^:]+: ";
+		String personaInici = "([^:]+:) ";
 		String resta = "(.*)";
 		String regals = "(.*?)-";
+		String separaGent = "([^:]+): (.*?)(- |$)";
 		
 		//Matcher es donde buscar y pattern es la expresión regular que busco
 		Pattern p = Pattern.compile(personaInici+resta);
 		Matcher m = p.matcher(linia);
+		m.matches();
+		
+		
+		
+		String descarte = m.group(2);
+		
+		
+		p = Pattern.compile(separaGent);
+		m = p.matcher(descarte);
 		
 		//Necesito conseguir los nombres y quedarme con el resto
 		while(m.find()){
-			System.out.print(m.group(1));
+			System.out.println(m.group(1));
+			System.out.print("...."+m.group(2));
+			System.out.println();
+			//Hay que comprovar quien da el regalo y sumarle los regalos que entregue
+			// (se hace contando las comas +1)
 		}
 		
 	}
