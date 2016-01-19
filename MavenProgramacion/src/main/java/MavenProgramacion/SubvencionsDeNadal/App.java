@@ -3,6 +3,7 @@ package MavenProgramacion.SubvencionsDeNadal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,16 +11,20 @@ import java.util.regex.Pattern;
 
 public class App {
 	
-	public int Pare = 0;
-	public int Reis = 0;
-	public int Tio = 0;
-	public int Christkind = 0;
+	public static int Pare = 0;
+	public static int Reis = 0;
+	public static int Tio = 0;
+	public static int Christkind = 0;
 	
+	/*Map< String,joguina> joguinesMap = new HashMap<String,joguina>();
+if(joguinesMap.containsKey(regal))
+joguinesMap.put(regal, objecte);*/
+	
+	/*public static Map< String,personatjes> personatjesMap = new HashMap<String,personatjes>();*/
 	
 	
 	public static void main( String[] args ) throws IOException    {
 		String linia;
-		
 		
 	
 		BufferedReader br = new BufferedReader( new InputStreamReader(
@@ -29,6 +34,12 @@ public class App {
 		
 			buscar(linia);
 		}
+		
+		int total = Pare+Reis+Tio+Christkind;
+		
+		
+		System.out.println("Pare Noel: "+Pare*100/total+"% Tió: "+Tio*100/total+"% Tres reis: "+Reis*100/total
+				+"% Christkind: "+(float)Christkind/total*100+"%");
 	
     }
 
@@ -45,8 +56,6 @@ public class App {
 		Matcher m = p.matcher(linia);
 		m.matches();
 		
-		
-		
 		String descarte = m.group(2);
 		
 		
@@ -55,12 +64,25 @@ public class App {
 		
 		//Necesito conseguir los nombres y quedarme con el resto
 		while(m.find()){
-			System.out.println(m.group(1));
-			System.out.print("...."+m.group(2));
-			System.out.println();
-			//Hay que comprovar quien da el regalo y sumarle los regalos que entregue
-			// (se hace contando las comas +1)
+			switch (m.group(1)){
+			case "Pare Noel": int quantitat1=comptarRegals(m.group(2)); Pare+=quantitat1+1; break;
+			case "Tió": int quantitat2=comptarRegals(m.group(2)); Tio+=quantitat2+1; break;
+			case "Tres reis": int quantitat3=comptarRegals(m.group(2)); Reis+=quantitat3+1; break;
+			case "Christkind": int quantitat4=comptarRegals(m.group(2)); Christkind+=quantitat4+1; break;
+			
+			}
 		}
 		
+	}
+
+	private static int comptarRegals(String regals) {
+		Pattern coma = Pattern.compile(",");
+		Matcher match = coma.matcher(regals);
+		int encontrados = 0;
+		
+		while(match.find()){
+			encontrados++;
+		}
+		return encontrados;
 	}
 }
