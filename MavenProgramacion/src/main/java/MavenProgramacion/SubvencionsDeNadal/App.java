@@ -3,6 +3,8 @@ package MavenProgramacion.SubvencionsDeNadal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,17 +13,9 @@ import java.util.regex.Pattern;
 
 public class App {
 	
-	public static int Pare = 0;
-	public static int Reis = 0;
-	public static int Tio = 0;
-	public static int Christkind = 0;
 	
-	/*Map< String,joguina> joguinesMap = new HashMap<String,joguina>();
-if(joguinesMap.containsKey(regal))
-joguinesMap.put(regal, objecte);*/
-	
-	/*public static Map< String,personatjes> personatjesMap = new HashMap<String,personatjes>();*/
-	
+	public static Map<String,Personatjes> personatjesMap = new HashMap<String,Personatjes>();
+	public static int total = 0;
 	
 	public static void main( String[] args ) throws IOException    {
 		String linia;
@@ -35,11 +29,12 @@ joguinesMap.put(regal, objecte);*/
 			buscar(linia);
 		}
 		
-		int total = Pare+Reis+Tio+Christkind;
+
+		for (String key : personatjesMap.keySet()) {
+			Personatjes nom = personatjesMap.get(key);
+			System.out.print(nom.getNom()+": "+nom.getRegals()*100/total+"% ");
+		}
 		
-		
-		System.out.println("Pare Noel: "+Pare*100/total+"% Tió: "+Tio*100/total+"% Tres reis: "+Reis*100/total
-				+"% Christkind: "+(float)Christkind/total*100+"%");
 	
     }
 
@@ -64,13 +59,23 @@ joguinesMap.put(regal, objecte);*/
 		
 		//Necesito conseguir los nombres y quedarme con el resto
 		while(m.find()){
-			switch (m.group(1)){
-			case "Pare Noel": int quantitat1=comptarRegals(m.group(2)); Pare+=quantitat1+1; break;
-			case "Tió": int quantitat2=comptarRegals(m.group(2)); Tio+=quantitat2+1; break;
-			case "Tres reis": int quantitat3=comptarRegals(m.group(2)); Reis+=quantitat3+1; break;
-			case "Christkind": int quantitat4=comptarRegals(m.group(2)); Christkind+=quantitat4+1; break;
-			
+			if(personatjesMap.containsKey(m.group(1))){
+				
+				int quantitat=comptarRegals(m.group(2));
+				String nomPersonatge = m.group(1).trim();
+				
+				Personatjes pe = personatjesMap.get(nomPersonatge);
+				pe.setRegals(quantitat);
+				total = total + quantitat + 1;
+			}else{
+				personatjesMap.put(m.group(1), new Personatjes(m.group(1)));
+				int quantitat=comptarRegals(m.group(2));
+				
+				Personatjes pe = personatjesMap.get(m.group(1));
+				pe.setRegals(quantitat);
+				total = total + quantitat + 1;
 			}
+			
 		}
 		
 	}
